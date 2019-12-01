@@ -1,40 +1,36 @@
 import React, { Component }  from 'react';
 import { Layout } from 'antd';
-import { Upload, message, Button, Icon } from 'antd';
+import axios from 'axios';
 
 const { Header, Content, Footer } = Layout;
 
-const props = {
-  name: 'file',
-  action: 'http://localhost:8080/api/import',
-  headers: {
-    authorization: 'authorization-text',
-  },
-  onChange(info) {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-    console.log(info);
-  },
-};
-
 class App extends Component{
+  constructor(){
+    super();
+    this.state = {brand: "Ford"};
+
+  }
+  
+  componentDidMount(){
+    console.log('a');
+    this.setState({
+      brand: "test"
+    })
+    axios.get('./statementLotto.json')
+    .then((res)=>{
+      console.log(res.data);
+    }).catch((err)=>{
+      console.log(err);
+    })
+  }
+
   render() {
     return(
     <Layout>
      <Header></Header>
         <Layout>
           <Content>
-            <Upload {...props}>
-              <Button>
-                <Icon type="upload" /> Click to Upload
-              </Button>
-            </Upload>
+            {this.state.brand}
           </Content>
         </Layout>
       <Footer></Footer>
